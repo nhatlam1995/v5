@@ -1,13 +1,13 @@
-if SHIELD_ALIXW
+if SHIELD_AUG1ST
 
 config ZMK_KEYBOARD_NAME
-    default "alixw"
+    default "Aug1st"
 
-config ALIXW_OS_MODE_LAYER
+config AUG1ST_OS_MODE_LAYER
     int "Keymap layer index meaning Windows/Linux mode"
     default 5
     help
-      Must match WINMODE in alixw.keymap. The os_mode widget shows WIN when this
+      Must match WINMODE in aug1st.keymap. The os_mode widget shows WIN when this
       layer is active and MAC otherwise, and the layer_status widget ignores this
       layer and everything above it so a toggled WINMODE does not mask the layer
       you are actually typing on.
@@ -20,10 +20,10 @@ config ZMK_DISPLAY
     select LV_USE_LABEL
 
 config I2C
-	default y
+    default y
 
 config SSD1306
-	default y
+    default y
 
 endif # ZMK_DISPLAY
 
@@ -58,11 +58,11 @@ config LV_Z_MEM_POOL_SIZE
 # These three are normally pulled in by ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN
 # (app/src/display/Kconfig). We use a custom status screen, so BUILT_IN is off
 # and we have to set them ourselves:
-#   - LV_USE_THEME_MONO: without it no theme is installed at all, so
-#     lv_theme_get_font_small() returns NULL and ZMK_DISPLAY_INVERT stops
-#     existing (it lives inside `if LV_USE_THEME_MONO`).
-#   - MONTSERRAT_12: the theme's small font, used by the layer widget.
-#   - LV_FONT_DEFAULT: Montserrat 16 for everything else.
+#    - LV_USE_THEME_MONO: without it no theme is installed at all, so
+#      lv_theme_get_font_small() returns NULL and ZMK_DISPLAY_INVERT stops
+#      existing (it lives inside `if LV_USE_THEME_MONO`).
+#    - MONTSERRAT_12: the theme's small font, used by the layer widget.
+#    - LV_FONT_DEFAULT: Montserrat 16 for everything else.
 # LVGL's own `default y if LV_COLOR_DEPTH_1` for the mono theme is suppressed by
 # ZMK's `imply LV_CONF_MINIMAL`, which is why an explicit default is needed.
 config LV_USE_THEME_MONO

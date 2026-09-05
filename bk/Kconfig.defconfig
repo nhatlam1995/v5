@@ -1,18 +1,18 @@
-if SHIELD_ALIXW
+if SHIELD_AUG1ST
 
 config ZMK_KEYBOARD_NAME
-    default "alixw"
+    default "Aug1st"
 
 if ZMK_DISPLAY
 
 config I2C
-	default y
+    default y
 
 config SSD1306
-	default y
+    default y
 
 config SSD1306_REVERSE_MODE
-	default y
+    default y
 
 endif # ZMK_DISPLAY
 
@@ -33,4 +33,4 @@ endchoice
 
 endif # LVGL
 
-endif
+endif # SHIELD_AUG1ST
