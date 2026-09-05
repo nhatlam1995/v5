@@ -1,0 +1,84 @@
+if SHIELD_ALIXW
+
+config ZMK_KEYBOARD_NAME
+    default "alixw"
+
+config ALIXW_OS_MODE_LAYER
+    int "Keymap layer index meaning Windows/Linux mode"
+    default 5
+    help
+      Must match WINMODE in alixw.keymap. The os_mode widget shows WIN when this
+      layer is active and MAC otherwise, and the layer_status widget ignores this
+      layer and everything above it so a toggled WINMODE does not mask the layer
+      you are actually typing on.
+
+if ZMK_DISPLAY
+
+config ZMK_DISPLAY
+    select LV_FONT_MONTSERRAT_26
+    select LV_FONT_MONTSERRAT_16
+    select LV_USE_LABEL
+
+config I2C
+	default y
+
+config SSD1306
+	default y
+
+endif # ZMK_DISPLAY
+
+if LVGL
+
+# Whole-screen redraw instead of partial chunks. At 64% the render buffer can't
+# hold 128x32, so every update is split into several partial areas and pushed
+# through Zephyr's lvgl_display_mono.c transform/flush path -- which is where
+# symbols intermittently come out as placeholder rectangles. 100% + full refresh
+# regenerates every pixel on each update, so nothing can be left stale.
+# Costs 512B for the I1 buffer + 512B for the mono conversion buffer.
+config LV_Z_FULL_REFRESH
+    default y
+
+config LV_Z_VDB_SIZE
+    default 100
+
+config LV_DPI_DEF
+    int
+    default 148
+
+config LV_Z_BITS_PER_PIXEL
+    default 1
+
+# ZMK's generic default (4096) is too small since the Zephyr 4.1 / LVGL 9
+# update: glyph cache allocations fail and FontAwesome symbols (USB, battery,
+# charge bolt) render as solid blocks. See zmkfirmware/zmk#3219 — nice!view got
+# bumped to 5120/8192 for the same reason. We run four widgets incl. WPM.
+config LV_Z_MEM_POOL_SIZE
+    default 8192
+
+# These three are normally pulled in by ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN
+# (app/src/display/Kconfig). We use a custom status screen, so BUILT_IN is off
+# and we have to set them ourselves:
+#   - LV_USE_THEME_MONO: without it no theme is installed at all, so
+#     lv_theme_get_font_small() returns NULL and ZMK_DISPLAY_INVERT stops
+#     existing (it lives inside `if LV_USE_THEME_MONO`).
+#   - MONTSERRAT_12: the theme's small font, used by the layer widget.
+#   - LV_FONT_DEFAULT: Montserrat 16 for everything else.
+# LVGL's own `default y if LV_COLOR_DEPTH_1` for the mono theme is suppressed by
+# ZMK's `imply LV_CONF_MINIMAL`, which is why an explicit default is needed.
+config LV_USE_THEME_MONO
+    default y
+
+config LV_FONT_MONTSERRAT_12
+    default y
+
+choice LV_FONT_DEFAULT
+    default LV_FONT_DEFAULT_MONTSERRAT_16
+endchoice
+
+choice LV_COLOR_DEPTH
+    default LV_COLOR_DEPTH_1
+endchoice
+
+endif # LVGL
+
+endif
