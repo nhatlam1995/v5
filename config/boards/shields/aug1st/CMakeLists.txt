@@ -9,4 +9,5 @@ if(CONFIG_ZMK_DISPLAY AND CONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM)
     zephyr_library_sources(widgets/os_mode.c)
     zephyr_library_sources(widgets/custom_icon.c)
     zephyr_library_sources(widgets/icon.c)
+    
 endif()
