@@ -3,6 +3,14 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
+    behaviors {
+        incdec_kp: incdec_kp {
+            compatible = "zmk,behavior-sensor-rotate";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
