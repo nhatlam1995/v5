@@ -1,13 +1,5 @@
 /*
  * Custom status screen for the aug1st shield.
- *
- * Adapted from ZMK's built-in status screen (app/src/display/status_screen.c),
- * MIT licensed, Copyright (c) 2020 The ZMK Contributors.
- *
- * Identical layout to the built-in screen -- the only change is swapping ZMK's
- * output status widget for the shield-local one, which renders USB/BLE with
- * glyphs that survive 1-bit rendering at 16px. Battery, layer and WPM are
- * ZMK's own widgets, reused as-is.
  */
 
 #include <lvgl.h>
@@ -35,30 +27,19 @@ lv_obj_t *zmk_display_status_screen(void) {
 
 #if IS_ENABLED(CONFIG_ZMK_WIDGET_BATTERY_STATUS)
     zmk_widget_battery_status_init(&battery_status_widget, screen);
-    lv_obj_set_style_text_font(zmk_widget_battery_status_obj(&battery_status_widget),
-                               lv_theme_get_font_small(screen), LV_PART_MAIN);
     lv_obj_align(zmk_widget_battery_status_obj(&battery_status_widget), LV_ALIGN_TOP_RIGHT, 0, 0);
 #endif
 
     aug1st_widget_output_status_init(&output_status_widget, screen);
-    lv_obj_set_style_text_font(aug1st_widget_output_status_obj(&output_status_widget),
-                               lv_theme_get_font_small(screen), LV_PART_MAIN);
     lv_obj_align(aug1st_widget_output_status_obj(&output_status_widget), LV_ALIGN_TOP_LEFT, 0, 0);
 
-    // Khởi tạo icon động ở giữa màn hình
+    // Hiển thị icon của bác ở chính giữa màn hình
     aug1st_widget_icon_init(screen);
 
-    /* Bottom row, both on the theme's small font so the two labels sit on a
-     * matching baseline. Layer on the left, OS mode on the right where the WPM
-     * counter used to be. */
     aug1st_widget_layer_status_init(&layer_status_widget, screen);
-    lv_obj_set_style_text_font(aug1st_widget_layer_status_obj(&layer_status_widget),
-                               lv_theme_get_font_small(screen), LV_PART_MAIN);
     lv_obj_align(aug1st_widget_layer_status_obj(&layer_status_widget), LV_ALIGN_BOTTOM_LEFT, 0, 0);
 
     aug1st_widget_os_mode_init(&os_mode_widget, screen);
-    lv_obj_set_style_text_font(aug1st_widget_os_mode_obj(&os_mode_widget),
-                               lv_theme_get_font_small(screen), LV_PART_MAIN);
     lv_obj_align(aug1st_widget_os_mode_obj(&os_mode_widget), LV_ALIGN_BOTTOM_RIGHT, 0, 0);
 
     return screen;
