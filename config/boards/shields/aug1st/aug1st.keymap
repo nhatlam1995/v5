@@ -11,6 +11,7 @@
                 &kp A  &kp B  &kp C  &kp D
                 &kp E  &kp F  &kp G  &mo 1
             >;
+            sensor-bindings = <&incdec_kp C_VOL_DN C_VOL_UP>;
         };
 
         fn_layer {
