@@ -33,9 +33,6 @@ lv_obj_t *zmk_display_status_screen(void) {
     aug1st_widget_output_status_init(&output_status_widget, screen);
     lv_obj_align(aug1st_widget_output_status_obj(&output_status_widget), LV_ALIGN_TOP_LEFT, 0, 0);
 
-    // Hiển thị icon của bác ở chính giữa màn hình
-    aug1st_widget_icon_init(screen);
-
     aug1st_widget_layer_status_init(&layer_status_widget, screen);
     lv_obj_align(aug1st_widget_layer_status_obj(&layer_status_widget), LV_ALIGN_BOTTOM_LEFT, 0, 0);
 
