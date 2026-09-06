@@ -3,10 +3,19 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
+    behaviors {
+        incdec_kp: incdec_kp {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp C_VOL_DN>, <&kp C_VOL_UP>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
+            sensor-bindings = <&incdec_kp>;
             bindings = <
                 &kp A  &kp B  &kp C  &kp D
                 &kp E  &kp F  &kp G  &mo 1
