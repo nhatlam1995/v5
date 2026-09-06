@@ -11,21 +11,32 @@
         };
     };
 
+    macros {
+        // Macro giả lập tổ hợp tắt nguồn nhanh trên Windows (Win + X -> U -> U)
+        win_shutdown: win_shutdown {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <60>;
+            tap-ms = <50>;
+            bindings = <&kp LG(X) &kp U &kp U>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             sensor-bindings = <&incdec_kp>;
             bindings = <
-                &kp A  &kp B  &kp C  &kp D
-                &kp E  &kp F  &kp G  &mo 1
+                &kp PSCRN   &kp LG(E)   &kp C_AL_CALC  &kp C_MUTE
+                &kp LG(N1)  &kp LG(N2)  &kp LG(N3)  &mo 1
             >;
         };
 
         fn_layer {
             bindings = <
                 &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &trans
-                &bt BT_CLR    &bootloader   &none         &none
+                &bt BT_CLR    &bootloader   &win_shutdown &none
             >;
         };
     };
